@@ -1,0 +1,17 @@
+version: '3.8'
+
+services:
+
+  web:
+    container_name: greg_ca_dnscheck
+    build:
+      context: ./services/web
+      dockerfile: Dockerfile
+    command: bash -c 'gunicorn --bind 0.0.0.0:5000 manage:app'
+    ports:
+      - 8086:5000
+    restart: unless-stopped
+    environment:
+      - FLASK_APP=project/__init__.py
+      - FLASK_ENV=production
+
