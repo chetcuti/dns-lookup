@@ -6,7 +6,7 @@
 </head>
 <body style="padding-top: 20px; padding-left: 20px;">
     <div id="content">
-        <form method="POST">
+        <form method="POST" action="/">
             <input style="padding: 3px; margin-top: 3px; margin-bottom: 3px;" id="domain" name="domain" placeholder="Domain" value="{{domain}}" size="20" autofocus><BR>
             <input type="submit" name="submit" value="Check &gt;&gt;&gt;" onclick="$('#loading').show();">
             <div id="loading" style="display:none;"><img height="100px" width="100px" src="{{url_for('static', filename='spinner.gif')}}"></div>

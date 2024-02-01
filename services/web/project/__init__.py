@@ -24,10 +24,12 @@ dig_servers = {
 app = Flask(__name__, static_folder="assets")
 
 
-# The route() function of the Flask class is a decorator,
-# which tells the application which URL should call
-# the associated function.
-@app.route("/")
+@app.route("/<domain>", methods=["GET"])
+def home_domain(domain):
+    return process_domain(domain)
+
+
+@app.route("/", methods=["GET"])
 def home():
     return render_template("home.html")
 
@@ -38,7 +40,6 @@ def home_post():
 
 
 def process_domain(dom):
-
     results = ""
 
     domain_details = get_details(dom)
@@ -110,7 +111,6 @@ def highlight_text(text, colour):
 
 
 def get_details(dom):
-
     default_text = "*MISSING*"
 
     try:
@@ -163,18 +163,14 @@ def get_details(dom):
 
 
 def get_propagation(dom, servers, ip_address):
-
     default_text = "*FAILED*"
 
     try:
-
         results = ""
         resolver = dns.resolver.Resolver()
 
         for key, value in servers.items():
-
             try:
-
                 resolver.nameservers = [socket.gethostbyname(value)]
                 for a_record in resolver.resolve(dom, "A"):
                     results += (
@@ -184,7 +180,6 @@ def get_propagation(dom, servers, ip_address):
                 results += key + "<BR>"
 
             except Exception:
-
                 results += (
                     highlight_text(default_text, "red")
                     + "&nbsp;&nbsp;&nbsp;"
@@ -195,13 +190,11 @@ def get_propagation(dom, servers, ip_address):
         return results
 
     except Exception:
-
         return highlight_text(default_text, "red")
 
 
 # main driver function
 if __name__ == "__main__":
-
     # run() method of Flask class runs the application
     # on the local development server.
     app.run()
