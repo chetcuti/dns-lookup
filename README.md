@@ -1,5 +1,5 @@
-DNS Checker
------------
+DNS Lookup
+----------
 
 ## Installation
 
